@@ -3,7 +3,7 @@ import MovieCard from './MovieCardComponent';
 import { fetchFromAPI } from '../utils/axios';
 import { randomChar } from '../utils/ramdom';
 
-export default function Hero() {
+export default function Hero({addMovieToList}) {
 
   const [searchedMovie, setSearchedMovie] = useState({})
   const [bgImg, setBgImg] = useState("")
@@ -18,13 +18,13 @@ export default function Hero() {
   
   }},[]);
 
-  const fetchMovie = async str => {
+  const fetchMovie = async (str) => {
     const movie  = await fetchFromAPI(str);
     setSearchedMovie(movie);
     setBgImg(movie.Poster);
     setSearching(false);
 
-  }
+  };
   const handleOnMovieSearch = () => {
     const str = searchRef.current.value;
     fetchMovie(str);
@@ -32,6 +32,12 @@ export default function Hero() {
   }
 
   const handleOnDelete = () => {
+    setSearchedMovie({})
+    setSearching(true)
+  }
+  const handleOnAddToTheList = (mood)=>{
+    addMovieToList({...searchedMovie, mood});
+   
     setSearchedMovie({})
     setSearching(true)
   }
@@ -63,7 +69,7 @@ export default function Hero() {
             <div className="input-group my-5">
             <input 
             ref={searchRef}
-            onFocus={() => setSearching (true)}
+            onFocus={() => setSearching(true)}
             type="text" 
             className="form-control"
             placeholder="Movie Name" 
@@ -80,7 +86,9 @@ export default function Hero() {
         {!searching && (
 
           <div className='movie-card-display showMovie'>
-              <MovieCard searchedMovie={searchedMovie} deleteFunc = {handleOnDelete}/>
+              <MovieCard searchedMovie={searchedMovie} 
+              deleteFunc = {handleOnDelete} 
+              handleOnAddToTheList={handleOnAddToTheList}/>
           </div>
           )}
 

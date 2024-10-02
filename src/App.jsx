@@ -1,17 +1,25 @@
+import React,{ useState } from 'react'
 import './App.css'
-import Display from './components/DiaplayComponent'
 import Hero from './components/HeroComponent'
+import { Display } from './components/DisplayComponent';
+
 
 function App() {
   
+  const [movieList, setMovieList] = useState([]);
+
+    const addMovieToList = (movie) =>{
+      const tempMovie = movieList.filter((item )=> item.imdbID !== movie.imdbID);
+    setMovieList([ ...tempMovie,movie ]); 
+    };
 
   return (
     <div className='wrapper'>
       {/* hero section */}
-        <Hero/>
+        <Hero addMovieToList={addMovieToList}/>
 
       {/* dispaly section */}
-        <Display/>
+        <Display movieList={movieList}/>
       
     </div>
   )
