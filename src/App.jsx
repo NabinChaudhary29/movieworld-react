@@ -2,6 +2,8 @@ import React,{ useEffect, useState } from 'react'
 import './App.css'
 import Hero from './components/HeroComponent'
 import { Display } from './components/DisplayComponent';
+import { storeInLocalSession } from './utils/localStorage';
+import { storeFromLocalSession } from './utils/localStorage';
 
 
 function App() {
@@ -10,7 +12,7 @@ function App() {
 
   useEffect (() => {
     const myList = storeFromLocalSession ();
-    myList?.length  && setMovieList (myList);
+    myList.length  && setMovieList (myList);
   }, [])
 
     const addMovieToList = (movie) =>{
