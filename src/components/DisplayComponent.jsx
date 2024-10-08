@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import MovieCard from './MovieCardComponent'
 
 
-export const Display = ({movieList},{handleOnDeleteMovie}) => {
+export const Display = ({movieList, handleOnDeleteMovie}) => {
   const [displayList,setDisplayList] = useState ([]);
-
+  
   useEffect(()=>{ setDisplayList(movieList)},[movieList])
   const handleOnFilter = (mood) => {
     if (mood === "all"){
       return setDisplayList(movieList);
     }
-      setDisplayList(movieList.filter((mv) => mv.mood === mood));
-      
+    
+    return setDisplayList(movieList.filter((mv) => mv.mood === mood));
   };
   return (
     <div className="container mt-5 ">
@@ -36,9 +36,9 @@ export const Display = ({movieList},{handleOnDeleteMovie}) => {
           <div className="row mt-5">
             <div className="col d-flex justify-content-around gap-2 flex-wrap">
               {
-                  movieList.map((item,i)=>(
+                  displayList.map((item,i)=>(
                     <div className="" key={i}>
-                      <MovieCard searchedMovie={item} deleteFunc={handleOnDeleteMovie}/>
+                      <MovieCard searchedMovie={item} deleteFunc={handleOnDeleteMovie} />
                       </div>
                   ))
               }
